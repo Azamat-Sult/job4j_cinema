@@ -18,64 +18,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost:8080/cinema/loadHall',
-                dataType: 'json'
-            }).done(function (data) {
-                let row = '<th style="width: 120px;">Ряд / Место</th>';
-                for (let i = 1; i < data[0].length; i++) {
-                    row += '<th>' + i + '</th>';
-                }
-                $('#tablehead').html(row);
-                row = '';
-                let disabled = '';
-                let busy = ' (Свободно)';
-                let bgcolor = ' style="background-color: lime;" ';
-                for (let i = 1; i < data.length; i++) {
-                    row += '<tr>'
-                        + '<th>' + i + '</th>';
-                    for (let j = 1; j < data[i].length; j++) {
-                        if (data[i][j] === 1) {
-                            disabled = 'disabled';
-                            busy = ' (Занято)'
-                            bgcolor = ' style="background-color: red;" ';
-                        }
-                        row += '<td' + bgcolor + '><input type="radio" name="place" value="?row=' + i + '&cell=' + j
-                            + '"' + disabled + '> Ряд ' + i + ', Место ' + j + busy + '</td>';
-                        disabled = '';
-                        busy = ' (Свободно)';
-                        bgcolor = ' style="background-color: lime;" ';
-                    }
-                    row += '</tr>';
-                }
-                $('#tablerows').html(row);
-            }).fail(function (err) {
-                console.log(err);
-            });
 
-        });
-    </script>
-    <script>
-        function validateAndPay() {
-            let result = 'Выберите ряд и место';
-            let radios = document.getElementsByName("place");
-            let params ='';
-            for (let i = 0; i < radios.length; i++) {
-                if (radios[i].checked === true) {
-                    result = '';
-                    params = radios[i].value;
-                }
-            }
-            if (result !== '') {
-                alert(result);
-                return false
-            }
-            window.location.href = document.location.href + "payment.jsp" + params;
-        }
-    </script>
+    <script type="text/javascript" src="js/documentReady.js"></script>
+
+    <script type="text/javascript" src="js/validateAndPay.js"></script>
 
     <title>Кинотеатр "Искра"</title>
 
