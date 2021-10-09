@@ -8,15 +8,13 @@ import java.util.List;
 
 public class Cinema {
 
+    private int hallRows = 7;
+
+    private int hallSeatsInRow = 11;
+
     private int sessionId = 111;
 
-    private int[][] hall4x4 = new int[][] {
-            {0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0}
-    };
+    private int[][] hall = new int[hallRows][hallSeatsInRow];
 
     private static final class Lazy {
         private static final Cinema INST = new Cinema();
@@ -38,9 +36,9 @@ public class Cinema {
         List<Ticket> tickets = PsqlStore.instOf().getAllTickets();
         if (tickets.size() != 0) {
             for (Ticket ticket : tickets) {
-                hall4x4[ticket.getRow()][ticket.getCell()] = 1;
+                hall[ticket.getRow()][ticket.getCell()] = 1;
             }
         }
-        return hall4x4;
+        return hall;
     }
 }
